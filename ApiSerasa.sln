@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiSerasa", "ApiSerasa.csproj", "{81D08C8E-74F2-516D-AE2A-3AA6B45B6868}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81D08C8E-74F2-516D-AE2A-3AA6B45B6868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D08C8E-74F2-516D-AE2A-3AA6B45B6868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D08C8E-74F2-516D-AE2A-3AA6B45B6868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D08C8E-74F2-516D-AE2A-3AA6B45B6868}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFF9AB7C-6C64-4E33-8635-7B1CA561FC5C}
+	EndGlobalSection
+EndGlobal
