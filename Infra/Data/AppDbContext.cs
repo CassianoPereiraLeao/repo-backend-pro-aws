@@ -8,6 +8,7 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Pet> Pets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
