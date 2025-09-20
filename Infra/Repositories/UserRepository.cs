@@ -27,9 +27,7 @@ public class UserRepository : IUserRepository
         var user = await _context.Users.FindAsync(id);
 
         if (user == null)
-        {
             return false;
-        }
 
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
@@ -75,15 +73,32 @@ public class UserRepository : IUserRepository
         user = user.Where(u => u.Email == login.Email);
 
         if (user == null)
-        {
             return null;
-        }
 
         return await user.FirstOrDefaultAsync();
     }
 
-    public Task<User> UpdateUser(User user)
+    public async Task<User?> UpdateUser(Guid id, UserDTOUpdate user)
     {
-        throw new NotImplementedException();
+        var userFind = await _context.Users.FindAsync(id);
+
+        if (userFind == null)
+            return null;
+
+        if (!string.IsNullOrEmpty(user.Name))
+            userFind.UpdateName(user.Name);
+        
+
+        if (user.Email != null)
+            userFind.UpdateEmail(user.Email);
+        
+
+        if (user.Password != null)
+            userFind.UpdatePassword(user.Password);
+
+        _context.Users.Update(userFind);
+        await _context.SaveChangesAsync();
+
+        return userFind;
     }
 }

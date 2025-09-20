@@ -20,14 +20,12 @@ public class UserService : IUserService
     {
         List<string?> errors = [];
         if (!userDTO.Email.IsValid())
-        { 
             errors.Add(userDTO.Email.GetError());
-        }
+        
 
         if (!userDTO.Password.IsValid())
-        {
             errors.Add(userDTO.Password.GetError());
-        }
+        
 
         if (errors.Count > 0)
         {
@@ -54,9 +52,23 @@ public class UserService : IUserService
         };
     }
 
-    public Task<UserResult> DeleteUser(Guid id)
+    public async Task<UserResult> DeleteUser(Guid id)
     {
-        throw new NotImplementedException();
+        bool removed = await _repository.DeleteUser(id);
+
+        if (removed)
+        {
+            return new UserResult
+            {
+                Success = false,
+                Errors = ["Usuário não encontrado"]
+            };
+        }
+
+        return new UserResult
+        {
+            Success = true
+        };
     }
 
     public async Task<UserResult> GetAllUsers(int? page)
@@ -109,19 +121,13 @@ public class UserService : IUserService
         List<string?> errors = [];
         var login = await _repository.Login(userDTO);
         if (!userDTO.Email.IsValid())
-        {
             errors.Add(userDTO.Email.GetError());
-        }
 
         if (!userDTO.Password.IsValid())
-        {
             errors.Add(userDTO.Password.GetError());
-        }
 
         if (login == null || !login.Password.ValidateRequest(userDTO.Password.ToString()))
-        {
             errors.Add("Email ou senha do usuário incorretos");
-        }
 
         if (errors.Count > 0 || login == null)
         {
@@ -142,11 +148,32 @@ public class UserService : IUserService
 
     public async Task<UserResult> UpdateUser(Guid id, UserDTOUpdate userDTO)
     {
-        var user = await _repository.GetUserById(id);
+        List<string?> errors = [];
+        if (userDTO.Email != null && !userDTO.Email.IsValid())
+            errors.Add(userDTO.Email.GetError());
+        
+
+        if (userDTO.Password != null && !userDTO.Password.IsValid())
+            errors.Add(userDTO.Password.GetError());
+        
+        if (errors.Count > 0)
+        {
+            return new UserResult
+            {
+                Success = false,
+                Errors = errors
+            };
+        }
+
+        var user = await _repository.UpdateUser(id, userDTO);
 
         if (user == null)
         {
-            return new UserResult { Success = false, Errors = ["Usuário não encontrado"] };
+            return new UserResult
+            {
+                Success = false,
+                Errors = ["Usuário não encontrado"]
+            };
         }
 
         return new UserResult

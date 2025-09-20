@@ -9,6 +9,6 @@ public interface IUserRepository
     Task<UserDTOResponse?> GetUserById(Guid id);
     Task<User> CreateUser(User user);
     Task<User?> Login(UserDTOLogin login);
-    Task<User> UpdateUser(User user);
+    Task<User?> UpdateUser(Guid id, UserDTOUpdate user);
     Task<bool> DeleteUser(Guid id);
 }

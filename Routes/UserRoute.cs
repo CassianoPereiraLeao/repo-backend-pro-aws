@@ -17,9 +17,8 @@ public static class UserRoute
         {
             var user = await userService.GetAllUsers(page);
             if (!user.Success)
-            {
                 return Results.BadRequest(new { errors = user.Errors});
-            }
+
             return Results.Ok(new { users = user.UsersDTOResponse });
         }).WithTags("User");
 
@@ -28,9 +27,7 @@ public static class UserRoute
             var user = await userService.GetUserById(Guid.Parse(id));
 
             if (!user.Success)
-            {
                 return Results.BadRequest(new { error = user.Errors });
-            }
 
             return Results.Ok(new { user = user.UsersDTOResponse });
         }).WithTags("User");
@@ -46,11 +43,9 @@ public static class UserRoute
             var response = await userService.CreateUser(userDTO);
 
             if (!response.Success)
-            {
                 return Results.BadRequest(new { errors = response.Errors });
-            }
 
-            return Results.Ok(new { user = response.UsersDTOResponse });
+            return Results.Created();
         }).WithTags("User");
 
         route.MapPost("/login", () =>
@@ -70,15 +65,19 @@ public static class UserRoute
             ));
             
             if (!user.Success)
-            {
                 return Results.BadRequest(new { errors = user.Errors });
-            }
+
             return Results.Ok(new { user = user.UsersDTOResponse });
         }).WithTags("User");
 
-        route.MapDelete("/", () =>
+        route.MapDelete("/{id}", async (string id, IUserService userService) =>
         {
-            
+            var user = await userService.DeleteUser(Guid.Parse(id));
+
+            if (!user.Success)
+                return Results.BadRequest(new { error = user.Errors });
+
+            return Results.Ok();
         }).WithTags("User");
     }
 }

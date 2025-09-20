@@ -13,7 +13,7 @@ public class User
         Password = password;
         Profile = profile;
     }
-    
+
     [Key]
     public Guid Id { get; init; } = Guid.NewGuid();
     [Required]
@@ -30,4 +30,9 @@ public class User
     public Password Password { get; private set; } = default!;
     [Required]
     public string Profile { get; private set; } = default!;
+    
+    public void UpdateName(string name) => Name = name;
+    public void UpdateEmail(Email email) => Email = email;
+    public void UpdatePassword(Password password) => Password = password;
+    public void UpdateProfile(string profile) => Profile = profile;
 }

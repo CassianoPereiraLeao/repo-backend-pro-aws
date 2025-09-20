@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tcc-proa-serasa-backend
+    env: dotnet
+    plan: free
+    repo: https://github.com/CassianoPereiraLeao/TCC-Proa-Serasa-Backend
+    branch: main
+    buildCommand: dotnet publish -c Release -o publish
+    startCommand: dotnet publish/TCC-Proa-Serasa-Backend.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DATABASE_PATH
+        value: ./database.sqlite
+        
