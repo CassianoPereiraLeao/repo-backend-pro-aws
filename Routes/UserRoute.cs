@@ -1,7 +1,8 @@
-using apiserasa.domain.dtos;
+using apiserasa.domain.dtos.user;
 using apiserasa.domain.interfaces;
 using apiserasa.ownedtypes;
 using apiserasa.routes.requests.create;
+using apiserasa.routes.requests.login;
 using apiserasa.routes.requests.update;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,9 @@ public static class UserRoute
         {
             var user = await userService.GetAllUsers(page);
             if (!user.Success)
-                return Results.BadRequest(new { errors = user.Errors});
+                return Results.BadRequest(new { success = user.Success, errors = user.Errors});
 
-            return Results.Ok(new { users = user.UsersDTOResponse });
+            return Results.Ok(new { success = user.Success, users = user.UsersDTOResponse });
         }).WithTags("User");
 
         route.MapGet("/{id}", async (string id, IUserService userService) =>
@@ -27,9 +28,9 @@ public static class UserRoute
             var user = await userService.GetUserById(Guid.Parse(id));
 
             if (!user.Success)
-                return Results.BadRequest(new { error = user.Errors });
+                return Results.BadRequest(new { success = user.Success, error = user.Errors });
 
-            return Results.Ok(new { user = user.UsersDTOResponse });
+            return Results.Ok(new { success = user.Success, user = user.UsersDTOResponse });
         }).WithTags("User");
 
         route.MapPost("/create", async ([FromBody] UserRequestCreate userRequest, IUserService userService) =>
@@ -43,14 +44,24 @@ public static class UserRoute
             var response = await userService.CreateUser(userDTO);
 
             if (!response.Success)
-                return Results.BadRequest(new { errors = response.Errors });
+                return Results.BadRequest(new { success = response.Success, errors = response.Errors });
 
             return Results.Created();
         }).WithTags("User");
 
-        route.MapPost("/login", () =>
+        route.MapPost("/login", async ([FromBody] UserRequestLogin userRequestLogin, IUserService userService) =>
         {
+            var userLogin = new UserDTOLogin(
+                new Email(userRequestLogin.Email),
+                new Password(userRequestLogin.Password)
+            );
             
+            var login = await userService.Login(userLogin);
+
+            if (!login.Success)
+                return Results.BadRequest(new { success = login.Success, errors = login.Errors });
+
+            return Results.Ok(new { success = login.Success, user = login.UsersDTOResponse });
         }).WithTags("User");
 
         route.MapPut("/{id}", async (string id, [FromBody] UserRequestUpdate userRequestUpdate, IUserService userService) =>
@@ -65,9 +76,9 @@ public static class UserRoute
             ));
             
             if (!user.Success)
-                return Results.BadRequest(new { errors = user.Errors });
+                return Results.BadRequest(new { success = user.Success, errors = user.Errors });
 
-            return Results.Ok(new { user = user.UsersDTOResponse });
+            return Results.Ok(new { success = user.Success, user = user.UsersDTOResponse });
         }).WithTags("User");
 
         route.MapDelete("/{id}", async (string id, IUserService userService) =>
@@ -75,9 +86,9 @@ public static class UserRoute
             var user = await userService.DeleteUser(Guid.Parse(id));
 
             if (!user.Success)
-                return Results.BadRequest(new { error = user.Errors });
+                return Results.BadRequest(new { success = user.Success, error = user.Errors });
 
-            return Results.Ok();
+            return Results.Ok(new { success = user.Success });
         }).WithTags("User");
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApiSerasa.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPetTable : Migration
+    public partial class InitPetTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,9 +23,12 @@ namespace ApiSerasa.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Vacinas = table.Column<string>(type: "TEXT", nullable: false),
-                    Age = table.Column<byte>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    Type = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Vaccines = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Age = table.Column<byte>(type: "INTEGER", nullable: false),
+                    AnimalSize = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    Locale = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {

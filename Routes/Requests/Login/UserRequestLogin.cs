@@ -1,4 +1,4 @@
-namespace apiserasa.routes.requests;
+namespace apiserasa.routes.requests.login;
 
 public class UserRequestLogin
 {

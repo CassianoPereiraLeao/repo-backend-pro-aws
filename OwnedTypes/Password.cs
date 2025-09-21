@@ -27,7 +27,7 @@ public class Password
             return "O campo senha deve ter no mínimo 8 caracteres";
         }
 
-        string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*]).{6,15}$";
+        string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%&*.,]).{6,15}$";
 
         if (!Regex.IsMatch(password, pattern))
         {

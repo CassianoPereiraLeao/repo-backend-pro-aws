@@ -1,4 +1,4 @@
-using apiserasa.domain.dtos;
+using apiserasa.domain.dtos.user;
 using apiserasa.infra.data;
 using apiserasa.infra.entities;
 using apiserasa.infra.interfaces;
@@ -14,8 +14,14 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<User> CreateUser(User user)
+    public async Task<User?> CreateUser(User user)
     {
+        var exist = await _context.Users.AsQueryable()
+        .Where(u => u.Email == user.Email)
+        .FirstOrDefaultAsync();
+
+        if (exist != null)
+            return null;
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
 
@@ -46,7 +52,8 @@ public class UserRepository : IUserRepository
             u.Id,
             u.Name,
             u.Email,
-            u.Profile
+            u.Profile,
+            u.PetId
         ));
 
         return await usersQuery.ToListAsync();
@@ -61,7 +68,8 @@ public class UserRepository : IUserRepository
             u.Id,
             u.Name,
             u.Email,
-            u.Profile
+            u.Profile,
+            u.PetId
         ));
 
         return await user.FirstOrDefaultAsync();
@@ -70,7 +78,7 @@ public class UserRepository : IUserRepository
     public async Task<User?> Login(UserDTOLogin login)
     {
         var user = _context.Users.AsQueryable();
-        user = user.Where(u => u.Email == login.Email);
+        user = user.Where(u => u.Email._email == login.Email._email);
 
         if (user == null)
             return null;

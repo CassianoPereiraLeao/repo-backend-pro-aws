@@ -1,4 +1,4 @@
-using apiserasa.domain.dtos;
+using apiserasa.domain.dtos.user;
 
 namespace apiserasa.results;
 

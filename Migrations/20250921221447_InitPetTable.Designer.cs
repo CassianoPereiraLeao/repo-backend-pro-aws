@@ -11,8 +11,8 @@ using apiserasa.infra.data;
 namespace ApiSerasa.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250920162119_AddPetTable")]
-    partial class AddPetTable
+    [Migration("20250921221447_InitPetTable")]
+    partial class InitPetTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,12 +29,29 @@ namespace ApiSerasa.Migrations
                     b.Property<byte>("Age")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("AnimalSize")
                         .IsRequired()
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
-                    b.PrimitiveCollection<string>("Vacinas")
+                    b.Property<string>("Locale")
                         .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Vaccines")
+                        .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

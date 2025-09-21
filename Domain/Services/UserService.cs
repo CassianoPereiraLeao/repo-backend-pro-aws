@@ -1,4 +1,4 @@
-using apiserasa.domain.dtos;
+using apiserasa.domain.dtos.user;
 using apiserasa.domain.interfaces;
 using apiserasa.infra.entities;
 using apiserasa.infra.interfaces;
@@ -44,11 +44,20 @@ public class UserService : IUserService
         );
 
         var response = await _repository.CreateUser(user);
+        if (response == null)
+        {
+            return new UserResult
+            {
+                Success = false,
+                Errors = ["Usuário já existente no banco de dados"]
+            };
+        }
+
         return new UserResult
         {
             Success = true,
             Errors = null,
-            UsersDTOResponse = [new UserDTOResponse( response.Id, response.Name, response.Email, response.Profile)]
+            UsersDTOResponse = [new UserDTOResponse(response.Id, response.Name, response.Email, response.Profile, response.PetId)]
         };
     }
 
@@ -142,7 +151,7 @@ public class UserService : IUserService
         {
             Success = true,
             Errors = null,
-            UsersDTOResponse = [new UserDTOResponse(login.Id, login.Name, login.Email, login.Profile)]
+            UsersDTOResponse = [new UserDTOResponse(login.Id, login.Name, login.Email, login.Profile, login.PetId)]
         };
     }
 
@@ -180,7 +189,7 @@ public class UserService : IUserService
         {
             Success = true,
             Errors = null,
-            UsersDTOResponse = [new UserDTOResponse(user.Id, user.Name, user.Email, user.Profile)]
+            UsersDTOResponse = [new UserDTOResponse(user.Id, user.Name, user.Email, user.Profile, user.PetId)]
         };
     }
 }

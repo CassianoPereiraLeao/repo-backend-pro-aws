@@ -1,6 +1,6 @@
 using apiserasa.ownedtypes;
 
-namespace apiserasa.domain.dtos;
+namespace apiserasa.domain.dtos.user;
 
 public class UserDTOUpdate
 {
