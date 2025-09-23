@@ -2,9 +2,8 @@ namespace apiserasa.domain.dtos.pet;
 
 public class PetDTO
 {
-    public PetDTO(Guid id, string name, string type, string vaccines, byte age, string animalSize, string locale)
+    public PetDTO(string name, string type, string vaccines, byte age, string animalSize, string locale)
     {
-        Id = id;
         Name = name;
         Type = type;
         Vaccines = vaccines;
@@ -12,7 +11,6 @@ public class PetDTO
         AnimalSize = animalSize;
         Locale = locale;
     }
-    public Guid Id { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string Type { get; private set; } = default!;
     public string Vaccines { get; private set; } = default!;

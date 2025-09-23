@@ -35,12 +35,22 @@ public class PetRepository : IPetRepository
         return true;
     }
 
-    public async Task<List<Pet>> GetAllPets(int page, int limit)
+    public async Task<List<PetDTOResponse>> GetAllPets(int page, int limit)
     {
         var pets = _context.Pets.AsQueryable()
         .OrderBy(p => p.Name)
         .Skip((page - 1) * limit)
-        .Take(limit);
+        .Take(limit)
+        .AsNoTracking()
+        .Select(p => new PetDTOResponse(
+            p.Id,
+            p.Name,
+            p.Type,
+            p.Vaccines,
+            p.Age,
+            p.AnimalSize,
+            p.Locale
+        ));
 
         return await pets.ToListAsync();
     }

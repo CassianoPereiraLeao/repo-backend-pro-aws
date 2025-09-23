@@ -17,11 +17,12 @@ public class UserRepository : IUserRepository
     public async Task<User?> CreateUser(User user)
     {
         var exist = await _context.Users.AsQueryable()
-        .Where(u => u.Email == user.Email)
+        .Where(u => u.Email._email == user.Email._email)
         .FirstOrDefaultAsync();
 
         if (exist != null)
             return null;
+            
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
 

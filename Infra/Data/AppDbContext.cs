@@ -22,7 +22,7 @@ public class AppDbContext : DbContext
 
             entity.OwnsOne(u => u.Password, passwordOwned =>
             {
-                passwordOwned.Property<string>(e => e._password).HasColumnName("Password").IsRequired();
+                passwordOwned.Property<string>(p => p._password).HasColumnName("Password").IsRequired();
             });
         });
     }

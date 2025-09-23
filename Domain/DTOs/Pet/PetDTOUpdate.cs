@@ -2,7 +2,7 @@ namespace apiserasa.domain.dtos.pet;
 
 public class PetDTOUpdate
 {
-    public PetDTOUpdate(string name, string type, string vaccines, byte age, string animalSize, string locale)
+    public PetDTOUpdate(string? name, string? type, string? vaccines, byte? age, string? animalSize, string? locale)
     {
         Name = name;
         Type = type;
