@@ -166,13 +166,13 @@ public class UserService : IUserService
             errors.Add(userDTO.Password.GetError());
         
         if (errors.Count > 0)
-        {
-            return new UserResult
             {
-                Success = false,
-                Errors = errors
-            };
-        }
+                return new UserResult
+                {
+                    Success = false,
+                    Errors = errors
+                };
+            }
 
         var user = await _repository.UpdateUser(id, userDTO);
 

@@ -2,6 +2,7 @@ using apiserasa.domain.dtos.user;
 using apiserasa.infra.data;
 using apiserasa.infra.entities;
 using apiserasa.infra.interfaces;
+using apiserasa.ownedtypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace apiserasa.infra.repositories;
@@ -96,14 +97,14 @@ public class UserRepository : IUserRepository
 
         if (!string.IsNullOrEmpty(user.Name))
             userFind.UpdateName(user.Name);
-        
+
 
         if (user.Email != null)
             userFind.UpdateEmail(user.Email);
         
 
         if (user.Password != null)
-            userFind.UpdatePassword(user.Password);
+            userFind.UpdatePassword(new Password(user.Password.ToHash()));
 
         _context.Users.Update(userFind);
         await _context.SaveChangesAsync();
