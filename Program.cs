@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
+// builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 builder.Services.AddCors(options =>
 {
@@ -19,9 +19,11 @@ builder.Services.AddCors(options =>
     );
 });
 
+var dbPath = Path.Combine(AppContext.BaseDirectory, "database.db");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+    options.UseSqlite($"Data Source={dbPath}");
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
