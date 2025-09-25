@@ -1,9 +1,3 @@
-# versionamento meu
-appsettings.json
-appsettings.Development.json
-database.db
-.vscode
-
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux,dotnetcore
 
