@@ -32,7 +32,9 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> DeleteUser(Guid id)
     {
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.Users.AsQueryable()
+        .Where(u => u.Id == id)
+        .FirstOrDefaultAsync();
 
         if (user == null)
             return false;
