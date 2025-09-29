@@ -15,6 +15,11 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
     );
+    options.AddPolicy("AllowFrontendGithub", policy =>
+        policy.WithOrigins("https://cassianopereiraleao.github.io")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+    );
 });
 
 var dbPath = Path.Combine(AppContext.BaseDirectory, "database.db");
