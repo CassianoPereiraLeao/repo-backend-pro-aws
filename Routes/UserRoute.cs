@@ -64,17 +64,19 @@ public static class UserRoute
             return Results.Ok(new { success = login.Success, user = login.UsersDTOResponse });
         }).WithTags("User");
 
-        route.MapPut("/{id}", async (string id, [FromBody] UserRequestUpdate userRequestUpdate, IUserService userService) =>
+        _ = route.MapPut("/{id}", async (string id, [FromBody] UserRequestUpdate userRequestUpdate, IUserService userService) =>
         {
             var userEmail = string.IsNullOrWhiteSpace(userRequestUpdate.Email) ? null : new Email(userRequestUpdate.Email);
             var userPassword = string.IsNullOrWhiteSpace(userRequestUpdate.Password) ? null : new Password(userRequestUpdate.Password);
+            Guid? userPetId = string.IsNullOrWhiteSpace(userRequestUpdate.PetId) ? null : Guid.Parse(userRequestUpdate.PetId);
 
             var user = await userService.UpdateUser(Guid.Parse(id), new UserDTOUpdate(
                 userRequestUpdate.Name,
                 userEmail,
-                userPassword
+                userPassword,
+                userPetId
             ));
-            
+
             if (!user.Success)
                 return Results.BadRequest(new { success = user.Success, errors = user.Errors });
 

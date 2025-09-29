@@ -108,6 +108,9 @@ public class UserRepository : IUserRepository
         if (user.Password != null)
             userFind.UpdatePassword(new Password(user.Password.ToHash()));
 
+        if (user.PetId != null)
+            userFind.UpdatePetid((Guid)user.PetId);
+
         _context.Users.Update(userFind);
         await _context.SaveChangesAsync();
 
