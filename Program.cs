@@ -45,6 +45,7 @@ app.UseSwagger();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontGithub");
+app.UseCors("AllowFrontendGithub");
 
 app.UserRoutes();
 app.PetRoutes();
