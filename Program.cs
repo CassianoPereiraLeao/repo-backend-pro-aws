@@ -10,12 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontGithub", policy =>
-        policy.WithOrigins("https://gu-lima.github.io")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-    );
-    options.AddPolicy("AllowFrontendGithub", policy =>
+    options.AddPolicy("AllowHost", policy =>
         policy.WithOrigins("https://cassianopereiraleao.github.io")
             .AllowAnyHeader()
             .AllowAnyMethod()
@@ -44,8 +39,7 @@ app.UseSwagger();
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowFrontGithub");
-app.UseCors("AllowFrontendGithub");
+app.UseCors("AllowHost");
 
 app.UserRoutes();
 app.PetRoutes();
